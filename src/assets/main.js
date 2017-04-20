@@ -20,11 +20,15 @@ function guess() {
         setMessage("You win! :)");
         showAnswer(true);
         showReplay();
+        answer = null;
+        attempt = null;
     } else if (attempt >= 10) {
         // #15
         setMessage("You Lose! :(");
         showAnswer(false);
         showReplay();
+        answer = null;
+        attempt = null;
     } else {
         // #16
         setMessage("Incorrect, try again.");
@@ -36,6 +40,7 @@ function guess() {
 // #05
 function setHiddenFields() {
     answer = "" + Math.floor(Math.random() * 9999);
+    console.log(answer);
 
     // #06
     while (answer.length < 4) {
