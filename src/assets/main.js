@@ -66,7 +66,8 @@ function validateInput(text) {
 
 // #12
 function getResults(guess) {
-    let div = "<div class='row'><span class='col-md-6'>";
+    let div = document.getElementById("results").innerHTML;
+    div += '<div class="row"><span class="col-md-6">' + guess + '</span><div class="col-md-6">';
     let result = '';
     let correct = '<span class="glyphicon glyphicon-ok"></span>';
     let kinda = '<span class="glyphicon glyphicon-transfer"></span>';
