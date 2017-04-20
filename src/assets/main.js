@@ -6,32 +6,33 @@ function guess() {
     //add functionality to guess function here
 
     // #08
-    if (answer === null || attempt === null) {
+    if (answer.value == '' || attempt.value == '') {
         setHiddenFields();
     }
 
     // #11
-    if (validateInput() === false) {
+    if (validateInput(input.value) === false) {
         return false;
     }
 
     // #14
-    if (getResults(input)) {
+    if (getResults(input.value)) {
         setMessage("You win! :)");
         showAnswer(true);
         showReplay();
-        answer = null;
-        attempt = null;
-    } else if (attempt >= 10) {
+        answer.value = '';
+        attempt.value = '';
+    } else if (attempt.value >= 10) {
         // #15
         setMessage("You Lose! :(");
         showAnswer(false);
         showReplay();
-        answer = null;
-        attempt = null;
+        answer.value = '';
+        attempt.value = '';
     } else {
         // #16
         setMessage("Incorrect, try again.");
+        attempt.value++;
     }
 }
 
@@ -39,15 +40,14 @@ function guess() {
 
 // #05
 function setHiddenFields() {
-    answer = "" + Math.floor(Math.random() * 9999);
-    console.log(answer);
+    answer.value = "" + Math.floor(Math.random() * 9999);
 
     // #06
-    while (answer.length < 4) {
+    while (answer.value.length < 4) {
         answer = '0' + answer;
     }
     // #07
-    attempt = 0;
+    attempt.value = 1;
 }
 
 // #09
@@ -57,7 +57,7 @@ function setMessage(msg) {
 
 // #10
 function validateInput(text) {
-    if (text.length === 4) {
+    if (text.toString().length === 4) {
         return true;
     }
     setMessage("Guesses must be exactly 4 characters long.");
@@ -75,20 +75,22 @@ function getResults(guess) {
     let numCorrect = 0;
 
     for (let i = 0; i < guess.length; i++) {
-        for (let j = 0; j < answer.length; j++) {
-            if (i === j && guess.charAt(i) === answer.charAt(j)) {
+        charResult = '';
+        for (let j = 0; j < answer.value.length; j++) {
+            if (i === j && guess.charAt(i) === answer.value.charAt(j)) {
                 charResult = correct;
-                numCorrect += 1
+                numCorrect += 1;
                 break;
-            } else if (guess.charAt(i) === answer.charAt(j)) {
-                if (guess.charAt(i) === answer.charAt(j)) {
+            } else if (guess.charAt(i) === answer.value.charAt(j)) {
+                if (guess.charAt(i) === answer.value.charAt(j)) {
                     charResult = kinda;
                     break;
                 }
             }
-            else if (j === answer.length && charResult.length === 0) {
+            else if (j === answer.value.length-1 && charResult.length === 0) {
                 charResult = incorrect;
             }
+
         }
         result = result + charResult;
     }
